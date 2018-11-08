@@ -13,6 +13,9 @@ app.get('/fortunes', (req, res) => {
 
 app.get('/fortunes/random', (req, res) => {
     console.log('requesting random fortune')
+    const randomIndex = Math.floor(Math.random() * fortunes.length)
+    const randomFortune = fortunes[randomIndex]
+    res.json(randomFortune)
 })
 
 app.get('/fortunes/:id', (req, res, next) => {
