@@ -1,9 +1,12 @@
 const express = require('express');
+const bodyParser = require('body-parser')
 const fortunes = require('./data/fortunes')
 
 const port = 8000
 
 const app = express()
+
+app.use(bodyParser.json())
 
 app.get('/fortunes', (req, res) => {
     res.json(fortunes)
@@ -35,4 +38,17 @@ app.listen(port, () => console.log(`Listening on port ${port}`));
 
 //app.listen makes the server live
 
+app.post('/fortunes', (req, res) => {
+    console.log(req.body);
+    const fortuneIds = fortunes.map(fortune => fortune.id);
+    const {message, lucky_number, spirit_animal} = req.body
+    const fortune = {id: (fortuneIds.length > 0 ? Math.max(...fortuneIds) : 0) + 1, 
+                    message ,
+                    lucky_number ,
+                    spirit_animal ,
+                    }
 
+const newFortnunes = fortunes.concat(fortune)
+res.json(newFortnunes)
+
+})
