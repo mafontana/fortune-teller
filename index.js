@@ -36,6 +36,15 @@ app.get('/fortunes/:id', (req, res, next) => {
     }
 }) 
 
+// app.use(function (err, req, res, next){
+//     console.error(err.stack)
+//     res.status(404).send("This is an error")
+// } )
+
+
+
+
+
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
 //app.listen makes the server live
@@ -62,9 +71,9 @@ app.put('/fortunes/:id', (req, res) => {
     const {id} = req.params;
     const {message, lucky_number, spirit_animal} = req.body;
     const oldFortune = fortunes.find(fortune => fortune.id == id);
-    oldFortune.message = message
-    oldFortune.lucky_number = lucky_number
-    oldFortune.spirit_animal = spirit_animal
+    if (message) oldFortune.message = message
+    if (lucky_number) oldFortune.lucky_number = lucky_number
+    if (spirit_animal) oldFortune.spirit_animal = spirit_animal
 
     fs.writeFile('./data/fortunes.json', JSON.stringify(fortunes), err => console.log(err))
 
