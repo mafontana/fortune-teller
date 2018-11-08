@@ -69,11 +69,15 @@ res.json(newFortunes)
 
 app.put('/fortunes/:id', (req, res) => {
     const {id} = req.params;
-    const {message, lucky_number, spirit_animal} = req.body;
+    // const {message, lucky_number, spirit_animal} = req.body;
     const oldFortune = fortunes.find(fortune => fortune.id == id);
-    if (message) oldFortune.message = message
-    if (lucky_number) oldFortune.lucky_number = lucky_number
-    if (spirit_animal) oldFortune.spirit_animal = spirit_animal
+    // if (message) oldFortune.message = message
+    // if (lucky_number) oldFortune.lucky_number = lucky_number
+    // if (spirit_animal) oldFortune.spirit_animal = spirit_animal
+
+    ["message", "lucky_number", "spirit_animal"].forEach(key => {
+        if (req.body[key]) oldFortune[key] = req.body[key]
+    })
 
     fs.writeFile('./data/fortunes.json', JSON.stringify(fortunes), err => console.log(err))
 
