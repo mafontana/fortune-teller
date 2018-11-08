@@ -1,6 +1,8 @@
+const fs = require('fs')
 const express = require('express');
 const bodyParser = require('body-parser')
 const fortunes = require('./data/fortunes')
+
 
 const port = 8000
 
@@ -48,7 +50,10 @@ app.post('/fortunes', (req, res) => {
                     spirit_animal ,
                     }
 
-const newFortnunes = fortunes.concat(fortune)
-res.json(newFortnunes)
+const newFortunes = fortunes.concat(fortune);
+
+ fs.writeFile('./data/fortunes.json', JSON.stringify(newFortunes), err => console.log(err))
+
+res.json(newFortunes)
 
 })
