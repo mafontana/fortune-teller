@@ -57,3 +57,16 @@ const newFortunes = fortunes.concat(fortune);
 res.json(newFortunes)
 
 })
+
+app.put('/fortunes/:id', (req, res) => {
+    const {id} = req.params;
+    const {message, lucky_number, spirit_animal} = req.body;
+    const oldFortune = fortunes.find(fortune => fortune.id == id);
+    oldFortune.message = message
+    oldFortune.lucky_number = lucky_number
+    oldFortune.spirit_animal = spirit_animal
+
+    fs.writeFile('./data/fortunes.json', JSON.stringify(fortunes), err => console.log(err))
+
+    res.json(fortunes)
+})
