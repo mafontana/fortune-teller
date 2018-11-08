@@ -83,3 +83,10 @@ app.put('/fortunes/:id', (req, res) => {
 
     res.json(fortunes)
 })
+
+app.delete('/fortunes/:id', (req, res) =>{
+    const {id} = req.params;
+    const newFortunes = fortunes.filter(fortune => fortune.id != id)
+    fs.writeFile('./data/fortunes.json', JSON.stringify(newFortunes), err => console.log(err))
+    res.json(newFortunes)
+})
